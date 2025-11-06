@@ -6,6 +6,7 @@ export default defineType({
   title: 'Course',
   type: 'document',
   fields: [
+    // ... (title, slug, mainImage, description fields are unchanged)
     defineField({
       name: 'title',
       title: 'Course Title',
@@ -17,7 +18,7 @@ export default defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'title', // Automatically generates a slug from the title
+        source: 'title',
         maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
@@ -27,7 +28,7 @@ export default defineType({
       title: 'Main Course Image',
       type: 'image',
       options: {
-        hotspot: true, // Enables smart image cropping
+        hotspot: true,
       },
     }),
     defineField({
@@ -36,12 +37,13 @@ export default defineType({
       type: 'text',
       rows: 4,
     }),
-    // This is where we will link to our Modules
+    
+    // This is the changed field
     defineField({
       name: 'modules',
       title: 'Course Modules',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'module'}}],
+      of: [{type: 'reference', to: {type: 'courseModule'}}], // <-- Updated reference
     }),
   ],
   preview: {
