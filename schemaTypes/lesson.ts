@@ -1,4 +1,4 @@
-// schemas/lesson.ts
+// schemaTypes/lesson.ts
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
@@ -10,42 +10,50 @@ export default defineType({
       name: 'title',
       title: 'Lesson Title',
       type: 'string',
+      validation: (Rule) => Rule.required(), // Good to make this required
     }),
-    // We will add Mux video, PDFs, and quizzes here later.
-    // For now, let's add a simple text editor.
+    
+    // --- ADD THIS NEW SLUG FIELD ---
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    // ---------------------------------
+    
+    defineField({
+      name: 'videoLecture',
+      title: 'Video Lecture',
+      type: 'mux.video',
+    }),
     defineField({
       name: 'content',
       title: 'Lesson Content',
       type: 'array',
       of: [
         {
-          type: 'block', // 'block' is for rich text (bold, italics, etc.)
+          type: 'block', // Rich text editor
         },
       ],
-    }),
-    // --- ADD THIS NEW FIELD ---
-    defineField({
-      name: 'quiz',
-      title: 'Quiz',
-      type: 'reference',
-      to: [{type: 'mcq'}], // This links to our new 'mcq' document type
     }),
     defineField({
       name: 'lectureNotes',
       title: 'Lecture Notes (PDF)',
       type: 'file',
       options: {
-        accept: '.pdf', // Only allows PDF files to be uploaded
+        accept: '.pdf',
       },
     }),
-
-    // ... inside the fields array ...
     defineField({
-      name: 'videoLecture',
-      title: 'Video Lecture',
-      type: 'mux.video', // This type is now available from the plugin
+      name: 'quiz',
+      title: 'Quiz',
+      type: 'reference',
+      to: [{type: 'mcq'}],
     }),
-// ...
-    // -------------------------
   ],
 })

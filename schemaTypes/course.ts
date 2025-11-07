@@ -37,6 +37,26 @@ export default defineType({
       type: 'text',
       rows: 4,
     }),
+
+    // --- ADD THESE NEW FIELDS ---
+    defineField({
+      name: 'onlineFee',
+      title: 'Online Fee',
+      type: 'string',
+      description: 'e.g., "BDT 5,000" or "Contact for fee"',
+    }),
+    defineField({
+      name: 'offlineFee',
+      title: 'Offline Fee',
+      type: 'string',
+    }),
+    defineField({
+      name: 'bkashNumber',
+      title: 'Bkash Payment Number',
+      type: 'string',
+      description: 'The number for students to send payment to.',
+    }),
+    // ----------------------------
     
     // This is the changed field
     defineField({
